@@ -58,7 +58,7 @@ export const getAllowedMoves = (pastMove: Move) => {
       y: noDelta.y + 1
     }
   ];
-
+  console.log(allowedMoves)
   return allowedMoves;
 };
 

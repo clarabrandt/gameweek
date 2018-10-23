@@ -35,7 +35,6 @@ type Status = 'pending' | 'started' | 'finished'
 const boardSize: number = 50;
 
 const createBoard = (boardSize : number) => {
-  
   //Create a row the length of boardSize
   const row: Row = [];
   for(let i=0;i<boardSize;i++) {
@@ -61,7 +60,7 @@ export class Game extends BaseEntity {
   @Column('json', {default: emptyBoard})
   board: Board
 
-  @Column('json')
+  @Column('json', {nullable: true})
   pastMoves: pastMoves
 
   @Column('char', {length:1, default: 'x'})
