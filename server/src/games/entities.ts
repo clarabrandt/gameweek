@@ -7,6 +7,25 @@ export type Symbol = 'x' | 'o'
 
 export type Row = any[];
 export type Board = Row[];
+export type pastMoves = Move[];
+export type allowedMoves = Position[];
+
+export interface Move {
+  position: {
+    x: number;
+    y: number;
+  };
+  vector: {
+    x: number;
+    y: number;
+  };
+}
+
+export interface Position {
+  x: number;
+  y: number;
+}
+
 type Status = 'pending' | 'started' | 'finished'
 
 
@@ -16,7 +35,6 @@ type Status = 'pending' | 'started' | 'finished'
 const boardSize: number = 50;
 
 const createBoard = (boardSize : number) => {
-  
   //Create a row the length of boardSize
   const row: Row = [];
   for(let i=0;i<boardSize;i++) {
@@ -41,6 +59,9 @@ export class Game extends BaseEntity {
 
   @Column('json', {default: emptyBoard})
   board: Board
+
+  @Column('json', {nullable: true})
+  pastMoves: pastMoves
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
