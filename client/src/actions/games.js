@@ -87,18 +87,18 @@ export const updateGame = (gameId, board) => (dispatch, getState) => {
     .then(_ => dispatch(updateGameSuccess()))
     .catch(err => console.error(err))
 }
-export const movePlayer = (playerId, board) => (dispatch, getState) => {
-  const state = getState()
-  const jwt = state.currentUser.jwt
+// export const movePlayer = (playerId, board) => (dispatch, getState) => {
+//   const state = getState()
+//   const jwt = state.currentUser.jwt
 
-  if (isExpired(jwt)) return dispatch(logout())
+//   if (isExpired(jwt)) return dispatch(logout())
 
-  request
-    .patch(`${baseUrl}/games/${gameId}`)
-    .set('Authorization', `Bearer ${jwt}`)
-    .send({ board })
-    .then(_ => dispatch(updateGameSuccess()))
-    .catch(err => console.error(err))
-}
+//   request
+//     .patch(`${baseUrl}/games/${gameId}`)
+//     .set('Authorization', `Bearer ${jwt}`)
+//     .send({ board })
+//     .then(_ => dispatch(updateGameSuccess()))
+//     .catch(err => console.error(err))
+// }
 
 

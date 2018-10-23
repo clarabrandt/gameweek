@@ -35,6 +35,7 @@ type Status = 'pending' | 'started' | 'finished'
 const boardSize: number = 50;
 
 const createBoard = (boardSize : number) => {
+
   //Create a row the length of boardSize
   const row: Row = [];
   for(let i=0;i<boardSize;i++) {
