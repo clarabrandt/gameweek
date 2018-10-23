@@ -1,0 +1,8 @@
+{
+  "name": "gameweek",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:clarabrandt/gameweek.git",
+  "author": "clarabrandt <mariaclarabrandt@gmail.com>",
+  "license": "MIT"
+}
