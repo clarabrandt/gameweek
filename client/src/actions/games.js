@@ -9,6 +9,7 @@ export const UPDATE_GAMES = 'UPDATE_GAMES'
 export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
 export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
 export const MOVE_PLAYER = 'MOVE_PLAYER'
+export const OPPONENT_MOVE = 'OPPONENT_MOVE'
 
 const updateGames = games => ({
   type: UPDATE_GAMES,
@@ -34,7 +35,7 @@ const playerMove = move => ({
 })
 
 const opponentMove = move => ({
-  type: OPPONTENT_MOVE,
+  type: OPPONENT_MOVE,
   payload: move
 })
 

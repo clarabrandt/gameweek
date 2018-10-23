@@ -1,5 +1,5 @@
-import {PLAYER_MOVE} from '../actions/games'
-import {OPPONTENT_MOVE} from '../actions/games'
+import {MOVE_PLAYER} from '../actions/games'
+import {OPPONENT_MOVE} from '../actions/games'
 
 
 const initialState = {
@@ -14,13 +14,13 @@ const initialState = {
 
 const moves = (state=initialState, action={}) => {
   switch (action.type) {
-    case OPPONTENT_MOVE:
+    case OPPONENT_MOVE:
     return {...state,
-      pastMovesOpponent: [...state.pastMovesOpponent, {...payload.move}] ,
-      allowedMoves: [...payload.allowedMoves] 
+      pastMovesOpponent: [...state.pastMovesOpponent, {...action.payload.move}] ,
+      allowedMoves: [...action.payload.allowedMoves] 
     }
 
-    case PLAYER_MOVE:
+    case MOVE_PLAYER:
     return {...state, pastMovesPlayer: {
       position: action.payload,
       vector: {x: action.payload.x - state.x,
