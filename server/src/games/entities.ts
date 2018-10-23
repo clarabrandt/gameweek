@@ -61,8 +61,11 @@ export class Game extends BaseEntity {
   @Column('json', {default: emptyBoard})
   board: Board
 
-  @Column('json', {nullable: true})
-  pastMoves: pastMoves
+  @Column('json', {default: [], nullable: true})
+  pastMovesPlayer1: pastMoves
+
+  @Column('json', {default: [], nullable: true})
+  pastMovesPlayer2: pastMoves
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
