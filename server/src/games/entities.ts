@@ -10,7 +10,7 @@ export type Board = Row[];
 export type pastMoves = Move[];
 export type allowedMoves = Position[];
 
-interface Move {
+export interface Move {
   position: {
     x: number;
     y: number;
@@ -21,7 +21,7 @@ interface Move {
   };
 }
 
-interface Position {
+export interface Position {
   x: number;
   y: number;
 }
@@ -63,7 +63,6 @@ export class Game extends BaseEntity {
 
   @Column('json')
   pastMoves: pastMoves
-
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
