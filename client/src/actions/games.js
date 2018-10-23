@@ -8,6 +8,7 @@ export const UPDATE_GAME = 'UPDATE_GAME'
 export const UPDATE_GAMES = 'UPDATE_GAMES'
 export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
 export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
+export const MOVE_PLAYER = 'MOVE_PLAYER'
 
 const updateGames = games => ({
   type: UPDATE_GAMES,
@@ -25,6 +26,11 @@ const updateGameSuccess = () => ({
 
 const joinGameSuccess = () => ({
   type: JOIN_GAME_SUCCESS
+})
+
+const playerMove = move => ({
+  type: MOVE_PLAYER,
+  payload: move
 })
 
 
@@ -81,3 +87,18 @@ export const updateGame = (gameId, board) => (dispatch, getState) => {
     .then(_ => dispatch(updateGameSuccess()))
     .catch(err => console.error(err))
 }
+export const movePlayer = (playerId, board) => (dispatch, getState) => {
+  const state = getState()
+  const jwt = state.currentUser.jwt
+
+  if (isExpired(jwt)) return dispatch(logout())
+
+  request
+    .patch(`${baseUrl}/games/${gameId}`)
+    .set('Authorization', `Bearer ${jwt}`)
+    .send({ board })
+    .then(_ => dispatch(updateGameSuccess()))
+    .catch(err => console.error(err))
+}
+
+
