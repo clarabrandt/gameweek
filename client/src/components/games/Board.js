@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react';
+import Cell from './Cell';
 import './Board.css'
 
-const renderCel = (makeMove, rowIndex, cellIndex, symbol, hasTurn) => {
-  return (
-    <button
-      className="board-tile"
-      disabled={hasTurn}
-      onClick={() => makeMove(rowIndex, cellIndex)}
-      key={`${rowIndex}-${cellIndex}`}
-    >{symbol || '-'}</button>
-  )
+class Board extends Component {
+  render() {
+    return (
+      this.props.board.map((row, rowIndex) =>
+        <div key={rowIndex}>
+          { row.map((cell, cellIndex) => 
+            <Cell key={`${rowIndex}-${cellIndex}`} rowIndex={rowIndex} cellIndex={cellIndex} makeMove={this.props.makeMove}/>
+          )}
+        </div>
+      )
+    )
+  }
 }
 
-export default ({board, makeMove}) => board.map((cells, rowIndex) =>
-  <div key={rowIndex}>
-    {cells.map((symbol, cellIndex) => renderCel(makeMove, rowIndex, cellIndex,symbol,false))}
-  </div>
-)
+export default Board

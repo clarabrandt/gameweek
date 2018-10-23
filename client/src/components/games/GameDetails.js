@@ -20,21 +20,28 @@ class GameDetails extends PureComponent {
   joinGame = () => this.props.joinGame(this.props.game.id)
 
   makeMove = (toRow, toCell) => {
-    const {game, updateGame} = this.props
-
-    const board = game.board.map(
-      (row, rowIndex) => row.map((cell, cellIndex) => {
-        if (rowIndex === toRow && cellIndex === toCell) return game.turn
-        else return cell
-      })
-    )
-    updateGame(game.id, board)
+    console.log(`Clicked on cel ${toCell} of row ${toRow}`);
+    const {game, updateGame} = this.props;
+    updateGame(game.id, {x: toRow, y: toCell});
   }
+
+  // makeMove = (toRow, toCell) => {
+  //   const {game, updateGame} = this.props
+
+  //   const board = game.board.map(
+  //     (row, rowIndex) => row.map((cell, cellIndex) => {
+  //       if (rowIndex === toRow && cellIndex === toCell) return game.turn
+  //       else return cell
+  //     })
+  //   )
+  //   updateGame(game.id, board)
+  // }
 
 
 
   render() {
     const {game, users, authenticated, userId} = this.props
+    console.log(this.props)
 
     if (!authenticated) return (
 			<Redirect to="/login" />
@@ -49,35 +56,37 @@ class GameDetails extends PureComponent {
       .filter(p => p.symbol === game.winner)
       .map(p => p.userId)[0]
 
-    return (<Paper className="outer-paper">
-      <h1>Game #{game.id}</h1>
+    return (
+      <Paper className="outer-paper">
+        <h1>Game #{game.id}</h1>
 
-      <p>Status: {game.status}</p>
+        <p>Status: {game.status}</p>
 
-      {
-        game.status === 'started' &&
-        player && player.symbol === game.turn &&
-        <div>It's your turn!</div>
-      }
+        {
+          game.status === 'started' &&
+          player && player.symbol === game.turn &&
+          <div>It's your turn!</div>
+        }
 
-      {
-        game.status === 'pending' &&
-        game.players.map(p => p.userId).indexOf(userId) === -1 &&
-        <button onClick={this.joinGame}>Join Game</button>
-      }
+        {
+          game.status === 'pending' &&
+          game.players.map(p => p.userId).indexOf(userId) === -1 &&
+          <button onClick={this.joinGame}>Join Game</button>
+        }
 
-      {
-        winner &&
-        <p>Winner: {users[winner].firstName}</p>
-      }
+        {
+          winner &&
+          <p>Winner: {users[winner].firstName}</p>
+        }
 
-      <hr />
+        <hr />
 
-      {
-        game.status !== 'pending' &&
-        <Board board={game.board} makeMove={this.makeMove} />
-      }
-    </Paper>)
+        {
+          game.status !== 'pending' &&
+          <Board board={game.board} makeMove={this.makeMove} />
+        }
+      </Paper>
+    )
   }
 }
 
