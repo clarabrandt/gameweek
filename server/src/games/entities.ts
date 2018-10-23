@@ -2,13 +2,36 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, M
 import User from '../users/entity'
 
 export type Symbol = 'x' | 'o'
-export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-export type Board = [ Row, Row, Row ]
+//export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
+//export type Board = [ Row, Row, Row ]
 
+export type Row = any[];
+export type Board = Row[];
 type Status = 'pending' | 'started' | 'finished'
 
-const emptyRow: Row = [null, null, null]
-const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+
+//const emptyRow: Row = [null, null, null]
+//const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
+
+const boardSize: number = 50;
+
+const createBoard = (boardSize : number) => {
+  
+  //Create a row the length of boardSize
+  const row: Row = [];
+  for(let i=0;i<boardSize;i++) {
+    row.push(null);
+  }
+  //Create board containing boardSize number of rows
+  const board: Board = [];
+  for(let i=0;i<boardSize;i++) {
+    board.push(row);
+  }
+
+  return board;
+}
+
+const emptyBoard: Board = createBoard(boardSize);
 
 @Entity()
 export class Game extends BaseEntity {
