@@ -7,6 +7,25 @@ export type Symbol = 'x' | 'o'
 
 export type Row = any[];
 export type Board = Row[];
+export type pastMoves = Move[];
+export type allowedMoves = Position[];
+
+interface Move {
+  position: {
+    x: number;
+    y: number;
+  };
+  vector: {
+    x: number;
+    y: number;
+  };
+}
+
+interface Position {
+  x: number;
+  y: number;
+}
+
 type Status = 'pending' | 'started' | 'finished'
 
 
@@ -41,6 +60,10 @@ export class Game extends BaseEntity {
 
   @Column('json', {default: emptyBoard})
   board: Board
+
+  @Column('json')
+  pastMoves: pastMoves
+
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
