@@ -28,6 +28,8 @@ export default (state = null, {type, payload}) => {
         return games
       }, {})
 
+      
+
     default:
       return state
   }
