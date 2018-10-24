@@ -1,6 +1,10 @@
 .outer-paper {
+  position: fixed;
   margin-top: 20px;
   margin: auto;
   padding: 20px;
-  width: 85%;
+ 
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column
 }
