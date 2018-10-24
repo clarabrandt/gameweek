@@ -27,16 +27,6 @@ const joinGameSuccess = () => ({
   type: JOIN_GAME_SUCCESS
 });
 
-const playerMove = (move, playerSymbol) => {
-  let MOVE_PLAYER;
-  if (playerSymbol === "x") MOVE_PLAYER = MOVE_PLAYER1;
-  else MOVE_PLAYER = MOVE_PLAYER2;
-  return {
-    type: MOVE_PLAYER,
-    payload: move
-  };
-};
-
 export const getGames = () => (dispatch, getState) => {
   const state = getState();
   if (!state.currentUser) return null;
@@ -88,7 +78,6 @@ export const updateGame = (gameId, newMove) => (dispatch, getState) => {
     .patch(`${baseUrl}/games/${gameId}`)
     .set("Authorization", `Bearer ${jwt}`)
     .send(newMove)
-    .then(_ => dispatch(playerMove(newMove, playerSymbol)))
     .then(_ => dispatch(updateGameSuccess()))
     .catch(err => console.error(err));
 };
