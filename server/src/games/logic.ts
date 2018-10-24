@@ -2,7 +2,7 @@
 //   ValidatorConstraint,
 //   ValidatorConstraintInterface
 // } from "class-validator";
-import {  Move, Position } from "./entities";
+import { Position } from "./entities";
 
 // @ValidatorConstraint()
 // export class IsBoard implements ValidatorConstraintInterface {
@@ -17,10 +17,15 @@ import {  Move, Position } from "./entities";
 //   }
 // }
 
-export const getAllowedMoves = (pastMove: Move) => {
+export const getAllowedMoves = (positionLast: Position, positionLastMinusOne: Position) => {
+  const vector = {
+    x: positionLast.x - positionLastMinusOne.x,
+    y: positionLast.y - positionLastMinusOne.y,
+  }
+
   const noDelta: Position = {
-    x: pastMove.position.x + pastMove.vector.x,
-    y: pastMove.position.y + pastMove.vector.y
+    x: positionLast.x + vector.x,
+    y: positionLast.y + vector.y
   };
 
   const allowedMoves: Position[] = [
