@@ -17,6 +17,7 @@ import { Position, Game, Player } from "./entities";
 // import { isValidTransition, calculateWinner, finished} from './logic'
 //import { Validate } from 'class-validator'
 import { io } from "../index";
+import { getAllowedMoves } from "./logic";
 
 // class GameUpdate {
 //   // @Validate(IsBoard, {
@@ -112,21 +113,23 @@ export default class GameController {
     // else {
     //   game.turn = player.symbol === 'x' ? 'o' : 'x'
     // }
+    let allowedMoves
+
     if (player.symbol === "x") {
       game.pastPositionsPlayer1.push(update);
-      const allowedMoves = allowedMoves(pastPositionsPlayer2[pastPositionsPlayer2.length-1], pastPositionsPlayer2[pastPositionsPlayer2.length-2])
+      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-2])
     }
     if (player.symbol === "o") {
       game.pastPositionsPlayer2.push(update);
-      const allowedMoves = allowedMoves(pastPositionsPlayer1[pastPositionsPlayer1.length-1], pastPositionsPlayer1[pastPositionsPlayer1.length-2])
+      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-2])
     }
     await game.save();
 
     io.emit("action", {
       type: "OPPONENT_MOVE",
       payload: {
-        allowedMoves: //
-        move: update
+        allowedMoves: allowedMoves,
+        position: update
       }
     });
 
