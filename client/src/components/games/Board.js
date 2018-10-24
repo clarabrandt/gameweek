@@ -17,3 +17,6 @@ class Board extends Component {
 }
 
 export default Board
+
+
+//<img src="https://harmmade.com/vectorracer/tracks/oval.png"></img>

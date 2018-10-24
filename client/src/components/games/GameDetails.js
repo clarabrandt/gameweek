@@ -28,7 +28,6 @@ class GameDetails extends PureComponent {
 
   render() {
     const {game, users, authenticated, userId} = this.props
-    console.log(this.props)
 
     if (!authenticated) return (
 			<Redirect to="/login" />
