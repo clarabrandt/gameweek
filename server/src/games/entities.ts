@@ -9,10 +9,8 @@ import {
 } from "typeorm";
 import User from "../users/entity";
 
-export type Symbol = "x" | "o";
-//export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
-//export type Board = [ Row, Row, Row ]
 
+export type Symbol = "x" | "o";
 export type Row = any[];
 export type Board = Row[];
 export type pastPositions = Position[];
@@ -35,9 +33,6 @@ export interface Position {
 }
 
 type Status = "pending" | "started" | "finished";
-
-//const emptyRow: Row = [null, null, null]
-//const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 const boardSize: number = 50;
 
@@ -87,6 +82,14 @@ export class Game extends BaseEntity {
     nullable: true
   })
   pastPositionsPlayer2: pastPositions;
+
+  @Column("json", {
+    default: [
+      null
+    ],
+    nullable: true
+  })
+  allowedMoves: allowedMoves;
 
   @Column("char", { length: 1, default: "x" })
   turn: Symbol;

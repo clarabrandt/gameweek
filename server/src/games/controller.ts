@@ -14,17 +14,8 @@ import {
 } from "routing-controllers";
 import User from "../users/entity";
 import { Position, Game, Player } from "./entities";
-// import { isValidTransition, calculateWinner, finished} from './logic'
-//import { Validate } from 'class-validator'
 import { io } from "../index";
 import { getAllowedMoves } from "./logic";
-
-// class GameUpdate {
-//   // @Validate(IsBoard, {
-//   //   message: 'Not a valid board'
-//   // })
-//   board: Board;
-// }
 
 @JsonController()
 export default class GameController {
@@ -86,7 +77,6 @@ export default class GameController {
     @Param("id") gameId: number,
     @Body() update: Position
   ) {
-
     const game = await Game.findOneById(gameId);
     if (!game) throw new NotFoundError(`Game does not exist`);
 
@@ -97,56 +87,44 @@ export default class GameController {
       throw new BadRequestError(`The game is not started yet`);
     if (player.symbol !== game.turn)
       throw new BadRequestError(`It's not your turn`);
-    // if (!isValidTransition(player.symbol, game.board, update.board))
-    // {
-    //   throw new BadRequestError(`Invalid move`)
-    // }
-
-    // const winner = calculateWinner(update.board)
-    // if (winner) {
-    //   game.winner = winner
-    //   game.status = 'finished'
-    // }
-    // else if (finished(update.board)) {
-    //   game.status = 'finished'
-    // }
-    // else {
-    //   game.turn = player.symbol === 'x' ? 'o' : 'x'
-    // }
-    let allowedMoves
-
-    console.log(game.pastPositionsPlayer1)
-    console.log(game.pastPositionsPlayer2)
-    console.log(update)
-    
+ 
     if (game.turn === "x" && game.pastPositionsPlayer2.length > 1) {
       game.pastPositionsPlayer1.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-2])
+      game.allowedMoves = getAllowedMoves(
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1],
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 2]
+      );
     }
     if (game.turn === "x" && game.pastPositionsPlayer2.length <= 1) {
       game.pastPositionsPlayer1.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1])
+      game.allowedMoves  = getAllowedMoves(
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1],
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1]
+      );
     }
 
     if (game.turn === "o" && game.pastPositionsPlayer1.length > 1) {
       game.pastPositionsPlayer2.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-2])
+      game.allowedMoves  = getAllowedMoves(
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1],
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 2]
+      );
     }
     if (game.turn === "o" && game.pastPositionsPlayer1.length <= 1) {
       game.pastPositionsPlayer2.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1])
+      game.allowedMoves  = getAllowedMoves(
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1],
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1]
+      );
     }
-   
-    
+
+    game.turn = player.symbol === "x" ? "o" : "x";
+
     await game.save();
 
-
-    io.emit("action", {
-      type: "OPPONENT_MOVE",
-      payload: {
-        allowedMoves: allowedMoves,
-        position: update
-      }
+    await io.emit("action", {
+      type: "UPDATE_GAME",
+      payload: game
     });
 
     return game;
