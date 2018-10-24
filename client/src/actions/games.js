@@ -89,8 +89,8 @@ export const updateGame = (gameId, newMove) => (dispatch, getState) => {
   request
     .patch(`${baseUrl}/games/${gameId}`)
     .set('Authorization', `Bearer ${jwt}`)
+    .send(newMove)
     .then(_ => dispatch(playerMove(newMove)))
-    // .send({ newMove })
     .then(_ => dispatch(updateGameSuccess()))
     .catch(err => console.error(err))
 }
