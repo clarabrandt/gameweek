@@ -85,7 +85,10 @@ export class Game extends BaseEntity {
 
   @Column("json", {
     default: [
-      null
+      {
+        x: 5,
+        y: 5
+      }
     ],
     nullable: true
   })
