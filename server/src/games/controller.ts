@@ -115,15 +115,31 @@ export default class GameController {
     // }
     let allowedMoves
 
-    if (player.symbol === "x") {
+    console.log(game.pastPositionsPlayer1)
+    console.log(game.pastPositionsPlayer2)
+    console.log(update)
+    
+    if (game.turn === "x" && game.pastPositionsPlayer2.length > 1) {
       game.pastPositionsPlayer1.push(update);
       allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-2])
     }
-    if (player.symbol === "o") {
+    if (game.turn === "x" && game.pastPositionsPlayer2.length <= 1) {
+      game.pastPositionsPlayer1.push(update);
+      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1])
+    }
+
+    if (game.turn === "o" && game.pastPositionsPlayer1.length > 1) {
       game.pastPositionsPlayer2.push(update);
       allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-2])
     }
+    if (game.turn === "o" && game.pastPositionsPlayer1.length <= 1) {
+      game.pastPositionsPlayer2.push(update);
+      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1])
+    }
+   
+    
     await game.save();
+
 
     io.emit("action", {
       type: "OPPONENT_MOVE",

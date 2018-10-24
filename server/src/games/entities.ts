@@ -1,7 +1,15 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity, Index, OneToMany, ManyToOne } from 'typeorm'
-import User from '../users/entity'
+import {
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  ManyToOne
+} from "typeorm";
+import User from "../users/entity";
 
-export type Symbol = 'x' | 'o'
+export type Symbol = "x" | "o";
 //export type Row = [ Symbol | null, Symbol | null, Symbol | null ]
 //export type Board = [ Row, Row, Row ]
 
@@ -26,78 +34,90 @@ export interface Position {
   y: number;
 }
 
-type Status = 'pending' | 'started' | 'finished'
-
+type Status = "pending" | "started" | "finished";
 
 //const emptyRow: Row = [null, null, null]
 //const emptyBoard: Board = [ emptyRow, emptyRow, emptyRow ]
 
 const boardSize: number = 50;
 
-const createBoard = (boardSize : number) => {
-
+const createBoard = (boardSize: number) => {
   //Create a row the length of boardSize
   const row: Row = [];
-  for(let i=0;i<boardSize;i++) {
+  for (let i = 0; i < boardSize; i++) {
     row.push(null);
   }
   //Create board containing boardSize number of rows
   const board: Board = [];
-  for(let i=0;i<boardSize;i++) {
+  for (let i = 0; i < boardSize; i++) {
     board.push(row);
   }
 
   return board;
-}
+};
 
 const emptyBoard: Board = createBoard(boardSize);
 
 @Entity()
 export class Game extends BaseEntity {
-
   @PrimaryGeneratedColumn()
-  id?: number
+  id?: number;
 
-  @Column('json', {default: emptyBoard})
-  board: Board
+  @Column("json", { default: emptyBoard })
+  board: Board;
 
-  @Column('json', {default: [], nullable: true})
-  pastPositionsPlayer1: pastPositions
+  @Column("json", {
+    default: [
+      {
+        x: 5,
+        y: 5
+      }
+    ],
+    nullable: true
+  })
+  pastPositionsPlayer1: pastPositions;
 
-  @Column('json', {default: [], nullable: true})
-  pastPositionsPlayer2: pastPositions
+  @Column("json", {
+    default: [
+      {
+        x: 5,
+        y: 5
+      }
+    ],
+    nullable: true
+  })
+  pastPositionsPlayer2: pastPositions;
 
-  @Column('char', {length:1, default: 'x'})
-  turn: Symbol
+  @Column("char", { length: 1, default: "x" })
+  turn: Symbol;
 
-  @Column('char', {length:1, nullable: true})
-  winner: Symbol
+  @Column("char", { length: 1, nullable: true })
+  winner: Symbol;
 
-  @Column('text', {default: 'pending'})
-  status: Status
+  @Column("text", { default: "pending" })
+  status: Status;
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
-  @OneToMany(_ => Player, player => player.game, {eager:true})
-  players: Player[]
+  @OneToMany(_ => Player, player => player.game, { eager: true })
+  players: Player[];
 }
 
 @Entity()
-@Index(['game', 'user', 'symbol'], {unique:true})
+@Index(["game", "user", "symbol"], { unique: true })
 export class Player extends BaseEntity {
-
   @PrimaryGeneratedColumn()
-  id?: number
+  id?: number;
 
   @ManyToOne(_ => User, user => user.players)
-  user: User
+  user: User;
 
   @ManyToOne(_ => Game, game => game.players)
-  game: Game
+  game: Game;
 
   @Column()
-  userId: number
+  userId: number;
 
-  @Column('char', {length: 1})
-  symbol: Symbol
+  @Column("char", { length: 1 })
+  symbol: Symbol;
 }

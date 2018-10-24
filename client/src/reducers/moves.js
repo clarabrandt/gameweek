@@ -11,7 +11,7 @@ const initialState = {
   ],
   pastMovesOpponent: [
     {
-      position: { x: 6, y: 5 },
+      position: { x: 5, y: 5 },
       vector: { x: 0, y: 0 }
     }
   ]
@@ -59,7 +59,8 @@ const moves = (state = initialState, action = {}) => {
           {
             position: action.payload,
             vector: {
-              vectorPlayer
+              x: vectorPlayer.x,
+              y: vectorPlayer.y
             }
           }
         ]
