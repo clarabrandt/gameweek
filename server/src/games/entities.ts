@@ -7,7 +7,7 @@ export type Symbol = 'x' | 'o'
 
 export type Row = any[];
 export type Board = Row[];
-export type pastMoves = Move[];
+export type pastPositions = Position[];
 export type allowedMoves = Position[];
 
 export interface Move {
@@ -62,10 +62,10 @@ export class Game extends BaseEntity {
   board: Board
 
   @Column('json', {default: [], nullable: true})
-  pastMovesPlayer1: pastMoves
+  pastPositionsPlayer1: pastPositions
 
   @Column('json', {default: [], nullable: true})
-  pastMovesPlayer2: pastMoves
+  pastPositionsPlayer2: pastPositions
 
   @Column('char', {length:1, default: 'x'})
   turn: Symbol
