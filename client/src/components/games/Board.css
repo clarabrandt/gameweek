@@ -1,4 +1,9 @@
 .board-tile {
+  position: absolute;
   height: 50px;
   width: 70px;
+}
+.row{
+  display: flex;
+  flex-wrap: nowrap
 }
