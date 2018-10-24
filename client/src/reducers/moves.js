@@ -21,13 +21,10 @@ const moves = (state = initialState, action = {}) => {
   switch (action.type) {
     case OPPONENT_MOVE:
       const vectorOpponent = {
-        x:
-          action.payload.position.x -
-          state.pastMovesOpponent[state.pastMovesOpponent.length - 1].position
-            .x,
-        y:
-          action.payload.position.y -
-          state.pastMovesOpponent[state.pastMovesOpponent.length - 1].position.y
+        x: action.payload.position.x -
+           state.pastMovesOpponent[state.pastMovesOpponent.length - 1].position.x,
+        y: action.payload.position.y -
+           state.pastMovesOpponent[state.pastMovesOpponent.length - 1].position.y
       };
 
       return {
@@ -44,12 +41,10 @@ const moves = (state = initialState, action = {}) => {
 
     case MOVE_PLAYER:
       const vectorPlayer = {
-        x:
-          action.payload.x -
-          state.pastMovesPlayer[state.pastMovesPlayer.length - 1].position.x,
-        y:
-          action.payload.y -
-          state.pastMovesPlayer[state.pastMovesPlayer.length - 1].position.y
+        x: action.payload.x -
+           state.pastMovesPlayer[state.pastMovesPlayer.length - 1].position.x,
+        y: action.payload.y -
+           state.pastMovesPlayer[state.pastMovesPlayer.length - 1].position.y
       };
 
       return {

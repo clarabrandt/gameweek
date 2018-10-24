@@ -17,9 +17,11 @@ class Cell extends Component {
   render() {
     const {rowIndex, cellIndex} = this.props;
     return (
-      <button
+      
+      <button class='button'
         onClick={() => this.props.makeMove(rowIndex, cellIndex)}
-      > {`-`} </button>
+      >  </button>
+      
     )
   }
 }
