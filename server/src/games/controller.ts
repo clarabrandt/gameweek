@@ -86,7 +86,6 @@ export default class GameController {
     @Param("id") gameId: number,
     @Body() update: Position
   ) {
-
     const game = await Game.findOneById(gameId);
     if (!game) throw new NotFoundError(`Game does not exist`);
 
@@ -111,42 +110,60 @@ export default class GameController {
     //   game.status = 'finished'
     // }
     // else {
-    //   game.turn = player.symbol === 'x' ? 'o' : 'x'
+    //    game.turn = player.symbol === 'x' ? 'o' : 'x'
     // }
-    let allowedMoves
 
-    console.log(game.pastPositionsPlayer1)
-    console.log(game.pastPositionsPlayer2)
-    console.log(update)
-    
+    let allowedMoves;
+
     if (game.turn === "x" && game.pastPositionsPlayer2.length > 1) {
       game.pastPositionsPlayer1.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-2])
+      allowedMoves = getAllowedMoves(
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1],
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 2]
+      );
     }
     if (game.turn === "x" && game.pastPositionsPlayer2.length <= 1) {
       game.pastPositionsPlayer1.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1], game.pastPositionsPlayer2[game.pastPositionsPlayer2.length-1])
+      allowedMoves = getAllowedMoves(
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1],
+        game.pastPositionsPlayer2[game.pastPositionsPlayer2.length - 1]
+      );
     }
 
     if (game.turn === "o" && game.pastPositionsPlayer1.length > 1) {
       game.pastPositionsPlayer2.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-2])
+      allowedMoves = getAllowedMoves(
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1],
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 2]
+      );
     }
     if (game.turn === "o" && game.pastPositionsPlayer1.length <= 1) {
       game.pastPositionsPlayer2.push(update);
-      allowedMoves = getAllowedMoves(game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1], game.pastPositionsPlayer1[game.pastPositionsPlayer1.length-1])
+      allowedMoves = getAllowedMoves(
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1],
+        game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1]
+      );
     }
-   
-    
+    const turn = game.turn;
+    game.turn = player.symbol === "x" ? "o" : "x";
+
     await game.save();
 
+    let PLAYERMOVE;
+    if (turn === "x") PLAYERMOVE = "PLAYER1MOVE";
+    else PLAYERMOVE = "PLAYER2MOVE";
 
-    io.emit("action", {
-      type: "OPPONENT_MOVE",
+    await io.emit("action", {
+      type: PLAYERMOVE,
       payload: {
         allowedMoves: allowedMoves,
         position: update
       }
+    });
+
+    await io.emit("action", {
+      type: "UPDATE_GAME",
+      payload: game
     });
 
     return game;
