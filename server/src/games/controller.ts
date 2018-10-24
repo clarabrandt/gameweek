@@ -13,7 +13,7 @@ import {
   Patch
 } from "routing-controllers";
 import User from "../users/entity";
-import { Move, Game, Player } from "./entities";
+import { Position, Game, Player } from "./entities";
 // import { isValidTransition, calculateWinner, finished} from './logic'
 //import { Validate } from 'class-validator'
 import { io } from "../index";
@@ -83,9 +83,9 @@ export default class GameController {
   async updateGame(
     @CurrentUser() user: User,
     @Param("id") gameId: number,
-    @Body() update: Move
+    @Body() update: Position
   ) {
-    console.log(update)
+
     const game = await Game.findOneById(gameId);
     if (!game) throw new NotFoundError(`Game does not exist`);
 
@@ -113,16 +113,16 @@ export default class GameController {
     //   game.turn = player.symbol === 'x' ? 'o' : 'x'
     // }
     if (player.symbol === "x") {
-      game.pastMovesPlayer1.push(update);
+      game.pastPositionsPlayer1.push(update);
     }
     if (player.symbol === "o") {
-      game.pastMovesPlayer2.push(update);
+      game.pastPositionsPlayer2.push(update);
     }
     await game.save();
 
     io.emit("action", {
-      type: "UPDATE_GAME",
-      payload: game
+      type: "OPPONENT_MOVE",
+      payload: update
     });
 
     return game;
