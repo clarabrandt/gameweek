@@ -114,15 +114,20 @@ export default class GameController {
     // }
     if (player.symbol === "x") {
       game.pastPositionsPlayer1.push(update);
+      const allowedMoves = allowedMoves(pastPositionsPlayer2[pastPositionsPlayer2.length-1], pastPositionsPlayer2[pastPositionsPlayer2.length-2])
     }
     if (player.symbol === "o") {
       game.pastPositionsPlayer2.push(update);
+      const allowedMoves = allowedMoves(pastPositionsPlayer1[pastPositionsPlayer1.length-1], pastPositionsPlayer1[pastPositionsPlayer1.length-2])
     }
     await game.save();
 
     io.emit("action", {
       type: "OPPONENT_MOVE",
-      payload: update
+      payload: {
+        allowedMoves: //
+        move: update
+      }
     });
 
     return game;
