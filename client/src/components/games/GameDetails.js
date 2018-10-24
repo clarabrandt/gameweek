@@ -22,7 +22,8 @@ class GameDetails extends PureComponent {
   makeMove = (toRow, toCell) => {
     console.log(`Clicked on cel ${toCell} of row ${toRow}`);
     const {game, updateGame} = this.props;
-    updateGame(game.id, {x: toRow, y: toCell});
+    const move = {x: toRow, y: toCell}
+    updateGame(game.id, move);
   }
 
   // makeMove = (toRow, toCell) => {
