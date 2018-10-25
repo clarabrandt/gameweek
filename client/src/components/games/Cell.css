@@ -2,12 +2,16 @@
 .button {
   /* border-bottom: 1px outset lightgrey;
   border-left: 1px outset lightgrey; */
-  background-color: white;
+  background-color: lightgray;
   height:12px;
   width:12px;
   color: lightgray;
   display: flex;
   justify-content: center;
+}
+
+.off-track {
+  background-color: green;
 }
 
 .button:visited  {
