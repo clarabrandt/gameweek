@@ -34,31 +34,34 @@ export interface Position {
 
 type Status = "pending" | "started" | "finished";
 
-const boardSize: number = 50;
+const boardSize: number[] = [30,70];
 
-const createBoard = (boardSize: number) => {
+const createBoard = (boardSize: number[]) => {
   //Create a row the length of boardSize
   const row: Row = [];
-  for (let i = 0; i < boardSize; i++) {
-    row.push(null);
+  for (let i = 0; i < boardSize[1]; i++) {
+    row.push({isOnTrack: false});
   }
   //Create board containing boardSize number of rows
   const board: Board = [];
-  for (let i = 0; i < boardSize; i++) {
+  for (let i = 0; i < boardSize[0]; i++) {
     board.push(row);
   }
 
   return board;
 };
 
-const emptyBoard: Board = createBoard(boardSize);
+const track: Board = createBoard(boardSize);
+
+//Define track
+track[3][3].isOnTrack = true;
 
 @Entity()
 export class Game extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column("json", { default: emptyBoard })
+  @Column("json", { default: track })
   board: Board;
 
   @Column("json", {
