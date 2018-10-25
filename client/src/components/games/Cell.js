@@ -4,21 +4,25 @@ import "./Cell.css";
 class Cell extends Component {
   render() {
     const { rowIndex, cellIndex } = this.props;
+    
 
     if (
       this.props.game.allowedMoves.find(
         move => move.x === rowIndex && move.y === cellIndex
       )
     )
+
+
       return (
-        <button
-          class="button"
+        <div 
+          className= "button button-active"
           onClick={() => this.props.makeMove(rowIndex, cellIndex)}
         >
-          X
-        </button>
+       
+        </div>
+        
       );
-    return <button class="button"> O </button>;
+    return <div className="button">  </div>;
   }
 }
 

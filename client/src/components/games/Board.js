@@ -8,9 +8,11 @@ class Board extends Component {
       this.props.board.map((row, rowIndex) =>
         <div className= 'row' key={rowIndex}>
           { row.map((cell, cellIndex) => 
-            <Cell key={`${rowIndex}-${cellIndex}`} rowIndex={rowIndex} cellIndex={cellIndex} makeMove={this.props.makeMove} game={this.props.game}/>
+            <Cell key={`${rowIndex}-${cellIndex}`} rowIndex={rowIndex} cellIndex={cellIndex} makeMove={this.props.makeMove} game={this.props.game} createArrow={this.props.createArrow}/>
           )}
         </div>
+
+    
       )
     )
   }
