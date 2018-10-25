@@ -15,6 +15,7 @@ class GameDetails extends PureComponent {
       if (this.props.game === null) this.props.getGames()
       if (this.props.users === null) this.props.getUsers()
     }
+  
   }
 
   joinGame = () => this.props.joinGame(this.props.game.id)
@@ -24,6 +25,28 @@ class GameDetails extends PureComponent {
     const {game, updateGame} = this.props;
     const move = {x: toRow, y: toCell}
     updateGame(game.id, move);
+  }
+
+  createArrow = (x1, x2, y1, y2) => {
+    // the distance between the 2 points
+    const distance= Math.sqrt((x1-x2)*(x1-x2)*12*12 + (y1-y2)*(y1-y2)*12*12)
+
+    //mid-point for rotation center
+    const xMid = (x1+x2)/2
+    const yMid = (y1+y2)/2
+
+    //
+    const radians= Math.atan2(y1-y2, x1-x2)
+    const degrees= (radians * 180) / Math.PI;
+    return {
+      color: "red",
+      width : distance,
+      height: 10,
+      top: yMid,
+      left: xMid - distance/2,
+      transform: `rotate(${degrees}deg)`
+
+    }
   }
 
   render() {
@@ -69,7 +92,7 @@ class GameDetails extends PureComponent {
 
         {
           game.status !== 'pending' &&
-          <Board board={game.board} makeMove={this.makeMove} game={this.props.game}/>
+          <Board board={game.board} makeMove={this.makeMove} game={this.props.game} createArrow={this.createArrow}/>
         }
       </Paper>
     )

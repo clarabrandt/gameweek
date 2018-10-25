@@ -1,18 +1,49 @@
 
 .button {
-  display:block;
-  float: left;
-  border-bottom: 1px outset lightgrey;
-  border-left: 1px outset lightgrey;
+  /* border-bottom: 1px outset lightgrey;
+  border-left: 1px outset lightgrey; */
   background-color: white;
-  height:34px;
-  width:34px;
-  border-image: none;
-  padding: none;
-  font-size: 30px;
-  color: lightgray
- 
+  height:12px;
+  width:12px;
+  color: lightgray;
+  display: flex;
+  justify-content: center;
 }
-button:active{
-  background:olive;
+
+.button:hover {
+  background-color: orchid;
 }
+
+.button::before{
+  content:'';
+  /* color: white; */
+  width: 12px; 
+  height: 12px;
+  border-bottom: solid 1px black; 
+  position: relative;
+  left: 0;
+  top: -6px;
+  z-index: 1; 
+
+}
+
+.button::after{
+  content: "";
+  display: block;
+  position: relative;
+  z-index: 1;
+  left: -6px;
+  border: 1px solid black;
+  border-width: 0 0 0 1px;
+}
+.button-active{
+  background-color: lightblue;
+  cursor: pointer
+}
+/* .arrow{
+  color: red;
+  width:2px;
+  transform: rotate(45deg);
+  transform-origin: 0% 0%;
+} */
+
