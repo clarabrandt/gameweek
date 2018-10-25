@@ -27,27 +27,29 @@ class GameDetails extends PureComponent {
     updateGame(game.id, move);
   }
 
-  createArrow = (x1, x2, y1, y2) => {
-    // the distance between the 2 points
-    const distance= Math.sqrt((x1-x2)*(x1-x2)*12*12 + (y1-y2)*(y1-y2)*12*12)
+  // createArrow = (x1, x2, y1, y2) => {
+  //   // the distance between the 2 points
+  //   const distance= Math.sqrt((x1-x2)*(x1-x2)*12*12 + (y1-y2)*(y1-y2)*12*12)
 
-    //mid-point for rotation center
-    const xMid = (x1+x2)/2
-    const yMid = (y1+y2)/2
+  //   //mid-point for rotation center
+  //   const xMid = (x1+x2)/2
+  //   const yMid = (y1+y2)/2
 
-    //
-    const radians= Math.atan2(y1-y2, x1-x2)
-    const degrees= (radians * 180) / Math.PI;
-    return {
-      color: "red",
-      width : distance,
-      height: 10,
-      top: yMid,
-      left: xMid - distance/2,
-      transform: `rotate(${degrees}deg)`
+  //   //
+  //   const radians= Math.atan2(y1-y2, x1-x2)
+  //   const degrees= (radians * 180) / Math.PI;
+  //   return {
+  //     backgroundColor: "red",
+  //     overflow: "visible",
+  //     width : `${distance}px`,
+  //     height: "2px",
+  //     position: "absolute",
+  //     top: yMid,
+  //     left: `${xMid - distance/2}px`,
+  //     transform: `rotate(${degrees}deg)`
 
-    }
-  }
+  //   }
+  // }
 
   render() {
     const {game, users, authenticated, userId} = this.props

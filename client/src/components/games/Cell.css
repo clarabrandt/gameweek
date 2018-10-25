@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.button:hover {
+.button:visited  {
   background-color: orchid;
 }
 
@@ -40,10 +40,11 @@
   background-color: lightblue;
   cursor: pointer
 }
-/* .arrow{
-  color: red;
-  width:2px;
-  transform: rotate(45deg);
-  transform-origin: 0% 0%;
-} */
+.arrow{
+  /* overflow: visible; */
+  z-index: 100;  
+}
+.color{
+  background: purple
+}
 
