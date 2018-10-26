@@ -157,7 +157,7 @@ export class Player extends BaseEntity {
   @ManyToOne(_ => Game, game => game.players)
   game: Game;
 
-  //@Column()
+  @Column()
   userId: number;
 
   @Column("char", { length: 1 })
