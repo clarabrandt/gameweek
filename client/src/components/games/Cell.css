@@ -2,7 +2,7 @@
 .cell {
   /* border-bottom: 1px outset lightgrey;
   border-left: 1px outset lightgrey; */
-  background-color: lightgray;
+  background-color: white;
   height:12px;
   width:12px;
   color: lightgray;
@@ -10,7 +10,7 @@
   justify-content: center;
   margin: 0;
   padding: 0;
-  border: 1px solid black;
+  border: 1px solid lightgray;
 }
 
 .off-track {
@@ -18,7 +18,7 @@
 }
 
 .start-finish {
-  background-color: white;
+  background-color:red;
 }
 
 /* .cell::before{

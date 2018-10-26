@@ -1,9 +1,13 @@
 .board-tile {
-  position: absolute;
+  display: flex;
+  justify-content: center;
+ 
+  /* position: absolute; */
   height: 50px;
   width: 70px;
 }
 .row{
   display: flex;
+  align-items: center;
   flex-wrap: nowrap
 }
