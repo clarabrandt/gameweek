@@ -1,5 +1,5 @@
 
-.button {
+.cell {
   /* border-bottom: 1px outset lightgrey;
   border-left: 1px outset lightgrey; */
   background-color: lightgray;
@@ -8,19 +8,21 @@
   color: lightgray;
   display: flex;
   justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 1px solid black;
 }
 
 .off-track {
   background-color: green;
 }
 
-.button:visited  {
-  background-color: orchid;
+.start-finish {
+  background-color: white;
 }
 
-.button::before{
+/* .cell::before{
   content:'';
-  /* color: white; */
   width: 12px; 
   height: 12px;
   border-bottom: solid 1px black; 
@@ -28,20 +30,30 @@
   left: 0;
   top: -6px;
   z-index: 1; 
-
+} */
+/* 
+.cell::before{
+  content: "";
+  display: block;
+  position: relative;
+  z-index: 1;
+  left: 0;
+  top: -6px;
+  border: 1px solid black;
+  border-width: 1px 0 0 0;
 }
 
-.button::after{
+.cell::after{
   content: "";
   display: block;
   position: relative;
   z-index: 1;
   left: -6px;
   border: 1px solid black;
-  border-width: 0 0 0 1px;
-}
+  border-width: 0 0 0 1px; 
+}*/
 .button-active{
-  background-color: lightblue;
+  background-color: yellow;
   cursor: pointer
 }
 .arrow{
@@ -50,5 +62,26 @@
 }
 .color{
   background: purple
+}
+
+.x {
+  color: black;
+  font-weight: 6;
+  justify-content: center;
+  align-items: center
+}
+
+.o {
+  color: black;
+  font-weight: 6;
+  justify-content: center;
+  align-items: center
+}
+
+.B {
+  color: black;
+  font-weight: 6;
+  justify-content: center;
+  align-items: center
 }
 

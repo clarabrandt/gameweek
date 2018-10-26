@@ -15,7 +15,7 @@ import {
 import User from "../users/entity";
 import { Position, Game, Player } from "./entities";
 import { io } from "../index";
-import { getAllowedMoves } from "./logic";
+import { getAllowedMoves, calculateWinner } from "./logic";
 
 @JsonController()
 export default class GameController {
@@ -117,6 +117,8 @@ export default class GameController {
         game.pastPositionsPlayer1[game.pastPositionsPlayer1.length - 1]
       );
     }
+
+    game.winner = calculateWinner(game.board, game.allowedMoves, game.turn, game.pastPositionsPlayer1, game.pastPositionsPlayer2);
 
     game.turn = player.symbol === "x" ? "o" : "x";
 
