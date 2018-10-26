@@ -10,7 +10,7 @@ import {
 import User from "../users/entity";
 import {track} from "./track"
 
-export type Symbol = "x" | "o";
+export type Symbol = "x" | "o" | null;
 export type Row = any[];
 export type Board = Row[];
 export type pastPositions = Position[];
